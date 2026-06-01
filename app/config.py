@@ -1,17 +1,21 @@
-import os
 from pathlib import Path
 
-from dotenv import load_dotenv
+from pydantic import AnyHttpUrl, Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(BASE_DIR / ".env")
 
-class Settings:
-    FASTAPI_HOST: str = os.getenv("FASTAPI_HOST", "0.0.0.0")
-    FASTAPI_PORT: int = int(os.getenv("FASTAPI_PORT", 8000))
-    NOTEBOOKUM_SERVICE_URL: str = os.getenv("NOTEBOOKUM_SERVICE_URL", "")
-    LOG_LEVEL: str = os.getenv("LOG_LEVEL", "info")
-    PYTHONUNBUFFERED: str = os.getenv("PYTHONUNBUFFERED", "1")
+class Settings(BaseSettings):
+    NOTEBOOKUM_SERVICE_URL: AnyHttpUrl = Field(..., env="NOTEBOOKUM_SERVICE_URL")
+    FASTAPI_HOST: str = Field("0.0.0.0", env="FASTAPI_HOST")
+    FASTAPI_PORT: int = Field(8000, env="FASTAPI_PORT")
+    LOG_LEVEL: str = Field("info", env="LOG_LEVEL")
+    PYTHONUNBUFFERED: str = Field("1", env="PYTHONUNBUFFERED")
+
+    model_config = SettingsConfigDict(
+        env_file=str(BASE_DIR / ".env"),
+        env_file_encoding="utf-8",
+    )
 
 
 settings = Settings()
