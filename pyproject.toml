@@ -1,0 +1,25 @@
+[project]
+name = "service-controller-notebookum"
+version = "0.1.0"
+description = "Microservicio controlador de llamadas (API Gateway / Orquestador) para NotebookUm."
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [
+  {name = "NotebookUm Team", email = "team@notebookum.example.com"}
+]
+classifiers = [
+  "Framework :: FastAPI",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12"
+]
+
+[project.dependencies]
+fastapi = "^0.111.0"
+uvicorn = {extras = ["standard"], version = "^0.23.0"}
+python-dotenv = "^1.0.0"
+httpx = "^0.25.0"
+
+[build-system]
+requires = ["setuptools>=67.0", "wheel"]
+build-backend = "setuptools.build_meta"

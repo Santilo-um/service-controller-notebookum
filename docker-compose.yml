@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  gateway:
+    build: .
+    container_name: notebookum-controller
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env.example
+    volumes:
+      - .:/app:ro
+    restart: unless-stopped
